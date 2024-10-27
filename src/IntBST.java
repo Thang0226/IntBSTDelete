@@ -43,6 +43,24 @@ public class IntBST {
         return new TreeNode(number);
     }
 
+    public boolean search(int value) {
+        if (size == 0) {
+            System.out.println("Tree is empty!");
+            return false;
+        }
+        TreeNode current = root;
+        while (current != null) {
+            if (value < current.key) {
+                current = current.left;
+            } else if (value > current.key) {
+                current = current.right;
+            } else {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public void preorder() {
         preorder(root);
     }
