@@ -91,7 +91,7 @@ public class IntBST {
         }
 
         if (current.left == null) {
-            if (parent == null) {   // found node is root, root has not left child
+            if (parent == null) {   // found node is root, root has no left child
                 root = root.right;
                 return true;
             }

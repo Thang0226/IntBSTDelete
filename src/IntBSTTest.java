@@ -18,8 +18,9 @@ public class IntBSTTest {
         Scanner input = new Scanner(System.in);
         System.out.print("\nEnter a number to delete in the tree: ");
         int value = input.nextInt();
-        tree.delete(value);
-        System.out.println("In-order traverse after delete " + value + ":");
-        tree.inorder();
+        if (tree.delete(value)) {
+            System.out.println("In-order traverse after delete " + value + ":");
+            tree.inorder();
+        }
     }
 }
