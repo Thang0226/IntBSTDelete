@@ -1,3 +1,5 @@
+import com.sun.source.tree.Tree;
+
 public class IntBST {
     protected TreeNode root;
     protected int size = 0;
@@ -48,6 +50,10 @@ public class IntBST {
             System.out.println("Tree is empty!");
             return false;
         }
+        return getNode(value) != null;
+    }
+
+    private TreeNode getNode(int value) {
         TreeNode current = root;
         while (current != null) {
             if (value < current.key) {
@@ -55,10 +61,77 @@ public class IntBST {
             } else if (value > current.key) {
                 current = current.right;
             } else {
-                return true;
+                return current;
             }
         }
-        return false;
+        return null;
+    }
+
+    public boolean delete(int value) {
+        if (size == 0) {
+            System.out.println("Tree is empty!");
+            return false;
+        }
+        TreeNode current = root;
+        TreeNode parent = null;
+        while (current != null) {
+            if (value < current.key) {
+                parent = current;
+                current = current.left;
+            } else if (value > current.key) {
+                parent = current;
+                current = current.right;
+            } else {
+                break;
+            }
+        }
+        if (current == null) {
+            System.out.println(value + " is not in the tree.");
+            return false;
+        }
+
+        if (current.left == null) {
+            if (parent == null) {   // found node is root, root has not left child
+                root = root.right;
+                return true;
+            }
+            pointParentToRightChild(current, parent);
+        } else {
+            swapCurrentWithMostRightChild(current, parent);
+        }
+        size--;
+        return true;
+    }
+
+    private void pointParentToRightChild(TreeNode current, TreeNode parent) {
+        if (current == parent.left) {
+            parent.left = current.right;
+        } else {
+            parent.right = current.right;
+        }
+    }
+
+    private void swapCurrentWithMostRightChild(TreeNode current, TreeNode parent) {
+        TreeNode mostRight = current.left;
+        TreeNode mostRightParent = null;
+        while (mostRight.right != null) {
+            mostRightParent = mostRight;
+            mostRight = mostRight.right;
+        }
+        if (parent == null) {   // found node is root
+            root = mostRight;
+        } else {
+            if (current == parent.left) {
+                parent.left = mostRight;
+            } else {
+                parent.right = mostRight;
+            }
+        }
+        if (mostRightParent != null) {
+            mostRightParent.right = mostRight.left;
+            mostRight.left = current.left;
+        }
+        mostRight.right = current.right;
     }
 
     public void preorder() {

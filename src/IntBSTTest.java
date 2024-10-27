@@ -16,12 +16,10 @@ public class IntBSTTest {
 
         System.out.println();
         Scanner input = new Scanner(System.in);
-        System.out.print("\nEnter a number to search in the tree: ");
+        System.out.print("\nEnter a number to delete in the tree: ");
         int value = input.nextInt();
-        if (tree.search(value)) {
-            System.out.println(value + " is in the tree!");
-        } else {
-            System.out.println(value + " is NOT in the tree.");
-        }
+        tree.delete(value);
+        System.out.println("In-order traverse after delete " + value + ":");
+        tree.inorder();
     }
 }
